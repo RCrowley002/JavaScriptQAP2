@@ -2,6 +2,20 @@
 const http = require("http");
 const routes = require("./routes");
 const myEmitter = require("./emitter");
+
+// setting up event listeners for accessed, denied and file paths
+myEmitter.on("routeAccess", (route, statusCode) => {
+  console.log(`Route accessed: ${route} \nStatus code: ${statusCode}`);
+});
+
+myEmitter.on("routeDenied", (route, statusCode) => {
+  console.log(`Route denied: ${route} \nStatus code: ${statusCode}`);
+});
+
+myEmitter.on("fileRead", (path) => {
+  console.log(`File read: ${path}`);
+});
+
 // Creating the HTTP server
 const server = http.createServer((request, response) => {
   // Getting the requested URL (step 3)
@@ -32,7 +46,7 @@ const server = http.createServer((request, response) => {
       break;
 
     case "/products":
-      path += "products.html";
+      path += "/products.html";
       //console.log(`Requested URL: ${url} received`);
       routes.productsPage(path, response, 200);
       break;
@@ -56,17 +70,11 @@ const server = http.createServer((request, response) => {
       break;
 
     // creating a page that exists but cannot be accessed
-    case "/superSecret":
-      path += "/superSecret.html";
-      //console.log(`Requested URL: ${url} received`);
-      routes.superSecretPage(path, response, 403);
-      break;
 
-    // creating a page that has no file just to return back an error
-    default:
-      path += "/404.html";
-      //console.log(`Requested URL: ${url} received`);
-      routes.errorPage(path, response, 404);
+    case "/superSecret":
+      let auth = false;
+      path += "/superSecret.html";
+      routes.superSecretPage(path, response, 200, auth);
       break;
   }
 });
