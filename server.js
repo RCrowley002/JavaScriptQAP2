@@ -1,5 +1,6 @@
 // JS QAP2 Server
 const http = require("http");
+const routes = require("./routes");
 
 // Creating the HTTP server
 const server = http.createServer((request, response) => {
@@ -8,43 +9,50 @@ const server = http.createServer((request, response) => {
   // console log for the requested URL
   //console.log(`Requested URL: ${url}`);
 
-  let path = "./views/";
+  let path = "./views";
 
   // Implementing routing logic using switch statement (step 4)
   switch (url) {
     case "/":
-      path += "index.html";
-      console.log(`Requested URL: ${url} received`);
+      path += "/index.html";
+      //console.log(`Requested URL: ${url} received`);
+      routes.indexPage(path, response);
       break;
 
     case "/about":
-      path += "about.html";
-      console.log(`Requested URL: ${url} received`);
+      path += "/about.html";
+      //console.log(`Requested URL: ${url} received`);
+      routes.aboutPage(path, response);
       break;
 
     case "/contact":
-      path += "contact.html";
-      console.log(`Requested URL: ${url} received`);
+      path += "/contact.html";
+      //console.log(`Requested URL: ${url} received`);
+      routes.contactPage(path, response);
       break;
 
     case "/products":
       path += "products.html";
-      console.log(`Requested URL: ${url} received`);
+      //console.log(`Requested URL: ${url} received`);
+      routes.productsPage(path, response);
       break;
 
     case "/subscribe":
-      path += "subscribe.html";
-      console.log(`Requested URL: ${url} received`);
+      path += "/subscribe.html";
+      //console.log(`Requested URL: ${url} received`);
+      routes.subscribePage(path, response);
       break;
 
     case "/blog":
-      path += "blog.html";
-      console.log(`Requested URL: ${url} received`);
+      path += "/blog.html";
+      //console.log(`Requested URL: ${url} received`);
+      routes.blogPage(path, response);
       break;
 
     case "/developement":
-      path += "developement.html";
-      console.log(`Requested URL: ${url} received`);
+      path += "/developement.html";
+      //console.log(`Requested URL: ${url} received`);
+      routes.developementPage(path, response);
       break;
   }
 });
